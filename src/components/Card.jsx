@@ -1,10 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  __deleteTodos,
-  __switchTodos,
-} from "../redux/modules/todoSlice";
+import { __deleteTodos, __switchTodos } from "../redux/modules/todoSlice";
 
 function Card({ todo }) {
   const dispatch = useDispatch();
@@ -13,7 +10,12 @@ function Card({ todo }) {
   };
 
   const switchBtn = () => {
-    dispatch(__switchTodos(todo));
+    dispatch(
+      __switchTodos({
+        ...todo,
+        isDone: !todo.isDone,
+      })
+    );
   };
 
   return (
