@@ -72,70 +72,69 @@ export const __updateTodos = createAsyncThunk(
 const todoSlice = createSlice({
   name: "todos",
   initialState,
-  extraReducers: {
-    [__getTodos.pending]: (state, action) => {
+  extraReducers: (builder) => {
+    builder.addCase(__getTodos.pending, (state, action) => {
       state.isLoading = true;
-    },
-    [__getTodos.fulfilled]: (state, action) => {
+    });
+    builder.addCase(__getTodos.fulfilled, (state, action) => {
       state.isLoading = false;
       state.todos = action.payload;
-    },
-    [__getTodos.rejected]: (state, action) => {
+    });
+    builder.addCase(__getTodos.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-    },
-    [__deleteTodos.pending]: (state, action) => {
+    });
+    builder.addCase(__deleteTodos.pending, (state, action) => {
       state.isLoading = true;
-    },
-    [__deleteTodos.fulfilled]: (state, action) => {
+    });
+    builder.addCase(__deleteTodos.fulfilled, (state, action) => {
       state.isLoading = false;
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
-    },
-    [__deleteTodos.rejected]: (state, action) => {
+    });
+    builder.addCase(__deleteTodos.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-    },
-    [__addTodos.pending]: (state, action) => {
+    });
+    builder.addCase(__addTodos.pending, (state, action) => {
       state.isLoading = true;
-    },
-    [__addTodos.fulfilled]: (state, action) => {
+    });
+    builder.addCase(__addTodos.fulfilled, (state, action) => {
       state.isLoading = false;
       state.todos = [...state.todos, action.payload];
-    },
-    [__addTodos.rejected]: (state, action) => {
+    });
+    builder.addCase(__addTodos.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-    },
-    [__switchTodos.pending]: (state, action) => {
+    });
+    builder.addCase(__switchTodos.pending, (state, action) => {
       state.isLoading = true;
-    },
-    [__switchTodos.fulfilled]: (state, action) => {
+    });
+    builder.addCase(__switchTodos.fulfilled, (state, action) => {
       state.isLoading = false;
       state.todos = state.todos.map((todo) => ({
         ...todo,
         isDone: todo.id === action.payload.id ? !todo.isDone : todo.isDone,
       }));
-    },
-    [__switchTodos.rejected]: (state, action) => {
+    });
+    builder.addCase(__switchTodos.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-    },
-    [__updateTodos.pending]: (state, action) => {
+    });
+    builder.addCase(__updateTodos.pending, (state, action) => {
       state.isLoading = true;
-    },
-    [__updateTodos.fulfilled]: (state, action) => {
+    });
+    builder.addCase(__updateTodos.fulfilled, (state, action) => {
       state.todos.forEach((todo, index) => {
         if (todo.id === action.payload.id) {
           state.todos.splice(index, 1, action.payload);
         }
       });
-    },
-    [__updateTodos.rejected]: (state, action) => {
+    });
+    builder.addCase(__updateTodos.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-    },
+    });
   },
 });
 
-export const { updateTodos } = todoSlice.reducer;
 export default todoSlice.reducer;
